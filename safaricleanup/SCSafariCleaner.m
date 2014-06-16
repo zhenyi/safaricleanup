@@ -8,11 +8,13 @@
 
 #import "SCSafariCleaner.h"
 
-
-NSString * const SCHistoryPlistPath     = @"Library/Safari/History.plist";
+NSString * const SCSafariLibraryPath    = @"Library/Safari";
 NSString * const SCHistoryIndexPath     = @"Library/Safari/HistoryIndex.sk";
-NSString * const SCLocalStoragePath     = @"Library/Safari/LocalStorage";
+NSString * const SCHistoryMetadataPath  = @"Library/Caches/Metadata/Safari/History";
 NSString * const SCCachesPath           = @"Library/Caches/com.apple.Safari";
+NSString * const SCServicesCachesPath   = @"Library/Caches/com.apple.SafariServices";
+NSString * const SCWebpagePreviewsPath  = @"Library/Caches/com.apple.Safari/Webpage Previews";
+NSString * const SCLocalStoragePath     = @"Library/Safari/LocalStorage";
 NSString * const SCDatabasesPath        = @"Library/Safari/Databases";
 NSString * const SCTopSitesPlistPath    = @"Library/Safari/TopSites.plist";
 
@@ -107,13 +109,16 @@ NSString * const SCTopSitesPlistPath    = @"Library/Safari/TopSites.plist";
 #pragma mark - Clear stuff
 
 - (void) clearHistory {
-    [self deleteFileAtPathFromHomeDirectory:SCHistoryPlistPath];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCSafariLibraryPath withPrefix:@"History.db"];
     [self deleteFileAtPathFromHomeDirectory:SCHistoryIndexPath];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCHistoryMetadataPath withPrefix:nil];
 }
 
 - (void) emptyCache {
-    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCLocalStoragePath withPrefix:nil];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCCachesPath withPrefix:@"Cache.db"];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCServicesCachesPath withPrefix:nil];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCWebpagePreviewsPath withPrefix:nil];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCLocalStoragePath withPrefix:nil];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCDatabasesPath withPrefix:nil];
 }
 
