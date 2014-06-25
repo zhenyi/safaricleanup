@@ -8,15 +8,17 @@
 
 #import "SCSafariCleaner.h"
 
-NSString * const SCSafariLibraryPath    = @"Library/Safari";
-NSString * const SCHistoryIndexPath     = @"Library/Safari/HistoryIndex.sk";
-NSString * const SCHistoryMetadataPath  = @"Library/Caches/Metadata/Safari/History";
-NSString * const SCCachesPath           = @"Library/Caches/com.apple.Safari";
-NSString * const SCServicesCachesPath   = @"Library/Caches/com.apple.SafariServices";
-NSString * const SCWebpagePreviewsPath  = @"Library/Caches/com.apple.Safari/Webpage Previews";
-NSString * const SCLocalStoragePath     = @"Library/Safari/LocalStorage";
-NSString * const SCDatabasesPath        = @"Library/Safari/Databases";
-NSString * const SCTopSitesPlistPath    = @"Library/Safari/TopSites.plist";
+NSString * const SCSafariLibraryPath        = @"Library/Safari";
+NSString * const SCHistoryIndexPath         = @"Library/Safari/HistoryIndex.sk";
+NSString * const SCHistoryMetadataPath      = @"Library/Caches/Metadata/Safari/History";
+NSString * const SCSearchDescriptionsPath   = @"Library/Safari/SearchDescriptions.plist";
+NSString * const SCCachesPath               = @"Library/Caches/com.apple.Safari";
+NSString * const SCCachedDataPath           = @"Library/Caches/com.apple.Safari/fsCachedData";
+NSString * const SCServicesCachesPath       = @"Library/Caches/com.apple.SafariServices";
+NSString * const SCWebpagePreviewsPath      = @"Library/Caches/com.apple.Safari/Webpage Previews";
+NSString * const SCLocalStoragePath         = @"Library/Safari/LocalStorage";
+NSString * const SCDatabasesPath            = @"Library/Safari/Databases";
+NSString * const SCTopSitesPlistPath        = @"Library/Safari/TopSites.plist";
 
 @interface SCSafariCleaner ()
 
@@ -112,10 +114,12 @@ NSString * const SCTopSitesPlistPath    = @"Library/Safari/TopSites.plist";
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCSafariLibraryPath withPrefix:@"History.db"];
     [self deleteFileAtPathFromHomeDirectory:SCHistoryIndexPath];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCHistoryMetadataPath withPrefix:nil];
+    [self deleteFileAtPathFromHomeDirectory:SCSearchDescriptionsPath];
 }
 
 - (void) emptyCache {
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCCachesPath withPrefix:@"Cache.db"];
+    [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCCachedDataPath withPrefix:nil];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCServicesCachesPath withPrefix:nil];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCWebpagePreviewsPath withPrefix:nil];
     [self deleteFilesInDirectoryAtPathFromHomeDirectory:SCLocalStoragePath withPrefix:nil];
